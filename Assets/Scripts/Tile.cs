@@ -18,7 +18,6 @@ public class Tile : Tappable {
 
 	public void SetTexture(Sprite tex)
 	{
-		Debug.Log ("Texture set to " + tex.ToString ());
 		GetComponent<SpriteRenderer> ().sprite = tex;
 	}
 

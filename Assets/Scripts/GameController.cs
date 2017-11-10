@@ -15,12 +15,85 @@ public class GameController : MonoBehaviour {
 	public Tile[,] tiles;
 	bool[,] previousCP;
 	bool[,] hasPlaced;
+	int[] easy = new int[] {
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		7,
+		7,
+		7,
+		7,
+		7,
+		7,
+		7,
+		7,
+		7,
+		7,
+		7,
+		7,
+		7,
+		7,
+		7,
+		7,
+		7,
+		7,
+		7,
+		7,
+		6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6
+	};
 	// Use this for initialization
 	void Start () {
 		engine = new Game ();
 		width = 44;
 		height = 44;
-		engine.initialise (width, height);
+		engine.initialise (width, height, easy);
 		tiles = new Tile[width, height];
 		previousCP = new bool[width, height];
 		for (int x = 0; x < width; x++) {
@@ -85,7 +158,6 @@ public class GameController : MonoBehaviour {
 		if (evt == null) {
 			return false;
 		}
-		Debug.Log (evt);
 		if (evt is TileChangedEvent) {
 			TileChangedEvent sEvt = (TileChangedEvent)evt;
 			tiles [sEvt.x, sEvt.y].SetTexture (tileTextures [sEvt.currentPiece.GetHashCode ()]);
@@ -93,7 +165,6 @@ public class GameController : MonoBehaviour {
 		}
 		if (evt is CurrentTileChangedEvent) {
 			CurrentTileChangedEvent sEvt = (CurrentTileChangedEvent)evt;
-			Debug.Log ("Current Tile is now " + sEvt.newCurrentTile.GetHashCode ().ToString());
 			GameObject.Find ("TileCurrent").GetComponent<Tile> ().SetTexture (tileTextures [sEvt.newCurrentTile.GetHashCode()]);
 		}
 		if (evt is StoredTileChangedEvent) {
@@ -119,7 +190,6 @@ public class GameController : MonoBehaviour {
 				q++;
 			}
 		}
-		Debug.Log ("Processed " + q.ToString () + " events.");
 		UpdateCPTiles ();
 	}
 
@@ -152,9 +222,7 @@ public class GameController : MonoBehaviour {
 
 	public void onTileTapped(int x, int y)
 	{
-		Debug.Log ("Tapped at " + x.ToString () + "," + y.ToString ());
-		Debug.Log ("Piece is " + engine.getCurrentTile ().GetHashCode ().ToString());
-		Debug.Log(engine.placePiece (x, y));
+		engine.placePiece (x, y);
 		ProcessAllEvents ();
 	}
 

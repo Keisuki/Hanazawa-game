@@ -8,10 +8,15 @@ public class Game {
 	GamePiece storedTile;
 	Queue<GameEvent> eventQueue = new Queue<GameEvent> ();
 	List<Position> uncoveredArrows = new List<Position>();
+	int[] chanceArray;
 	// Use this for initialization
 
-	public void initialise(int xwidth, int ywidth)
+	public void initialise(int xwidth, int ywidth, int[] chances)
 	{
+		if (chances.GetLength (0) != 100) {
+			throw new System.ArgumentException ("chances array must be of length 100");
+		}
+		chanceArray = chances;
 		tileData = new GamePiece?[xwidth, ywidth];
 		currentTile = new GamePiece ();
 		currentTile.up = true;
@@ -21,6 +26,7 @@ public class Game {
 		storedTile = generatePiece ();
 		queueEvent (new CurrentTileChangedEvent (currentTile));
 		queueEvent (new StoredTileChangedEvent (storedTile));
+
 	}
 
 	void queueEvent(GameEvent evt)
@@ -49,39 +55,11 @@ public class Game {
 
 	private GamePiece generatePiece()
 	{
-		int i = Random.Range (0, 5);
-		GamePiece g = new GamePiece();
-		switch (i) {
-		case(0):
-			{
-				return g;
-			}
-		case(1):
-			{
-				g.up = true;
-				return g;
-			}
-		case(2):
-			{
-				g.up = true;
-				g.right = true;
-				return g;
-			}
-		case(3):
-			{
-				g.left = true;
-				g.right = true;
-				return g;
-			}
-		case (4):
-			{
-				g.left = true;
-				g.up = true;
-				g.right = true;
-				return g;
-			}
-		}
-		Debug.Log ("generatePiece didn't return a value");
+		int i = Random.Range(0,99);
+
+		int hash = chanceArray [i];
+		Debug.Log (i.ToString () + "--" + hash.ToString ());
+		GamePiece g = GamePiece.fromHash (hash);
 		return g;
 	}
 
@@ -392,6 +370,15 @@ public struct GamePiece {
 		r.up = left;
 		r.right = up;
 		return r;
+	}
+	public static GamePiece fromHash(int h)
+	{
+		GamePiece c = new GamePiece();
+		c.down = (h / 8 == 1);
+		c.right = ((h / 4) % 2 == 1);
+		c.left = ((h / 2) % 2 == 1);
+		c.up = (h % 2 == 1);
+		return c;
 	}
 }
 
