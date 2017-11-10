@@ -16,6 +16,10 @@ public class InputController : MonoBehaviour {
 	void Update () {
 		Vector2 currentPosition = Input.mousePosition;
 		lastClick += Time.deltaTime;
+		if (Input.GetMouseButtonDown (0)) {
+			lastClick = 0;
+			lastHoldPosition = currentPosition;
+		}
 		if (Input.GetMouseButtonUp (0)) {
 			if (lastClick < tapTimeSensitivity) {
 				OnTap (lastHoldPosition);
@@ -26,9 +30,7 @@ public class InputController : MonoBehaviour {
 				OnDrag (currentPosition - lastHoldPosition); 
 			}
 		}
-		if (Input.GetMouseButtonDown (0)) {
-			lastClick = 0;
-		}
+
 		lastHoldPosition = currentPosition;
 	}
 
