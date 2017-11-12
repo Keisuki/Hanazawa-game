@@ -320,6 +320,10 @@ public class Game {
 			Position p = (Position)obj;
 			return ((p.x == x) && (p.y == y));
 		}
+		public override int GetHashCode ()
+		{
+			return base.GetHashCode ();
+		}
 	}
 
 }

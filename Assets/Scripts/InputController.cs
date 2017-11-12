@@ -7,12 +7,7 @@ public class InputController : MonoBehaviour {
 	public float tapTimeSensitivity = 0.25f;
 	public float dragCameraMultiplier;
 	Vector2 lastHoldPosition;
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
+
 	void Update () {
 		Vector2 currentPosition = Input.mousePosition;
 		lastClick += Time.deltaTime;
@@ -76,8 +71,9 @@ public class InputController : MonoBehaviour {
 	public void OnScale(float factor)
 	{
 		Vector3 newPosition = transform.position;
-		newPosition.x = newPosition.x * 1/factor;
-		newPosition.y = newPosition.z * 1/factor;
+		newPosition.x = newPosition.x * factor;
+		newPosition.y = newPosition.y * factor;
+		transform.position = newPosition;
 	}
 }
 
