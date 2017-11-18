@@ -196,13 +196,13 @@ public class GameController : MonoBehaviour {
 	public static void loadGame(string ls)
 	{
 		loadString = ls;
-		SceneManager.LoadScene (0);
+		SceneManager.LoadScene (1);
 	}
 
 	public static void startGame()
 	{
 		loadString = null;
-		SceneManager.LoadScene (0);
+		SceneManager.LoadScene (1);
 	}
 
 
