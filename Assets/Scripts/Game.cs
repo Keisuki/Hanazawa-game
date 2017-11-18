@@ -8,15 +8,12 @@ public class Game {
 	GamePiece storedTile;
 	Queue<GameEvent> eventQueue = new Queue<GameEvent> ();
 	List<Position> uncoveredArrows = new List<Position>();
-	int[] chanceArray;
+	PieceGenerator generator;
 	// Use this for initialization
 
-	public void initialise(int xwidth, int ywidth, int[] chances)
+	public void initialise(int xwidth, int ywidth, PieceGenerator _generator)
 	{
-		if (chances.GetLength (0) != 100) {
-			throw new System.ArgumentException ("chances array must be of length 100");
-		}
-		chanceArray = chances;
+		generator = _generator;
 		tileData = new GamePiece?[xwidth, ywidth];
 		currentTile = new GamePiece ();
 		currentTile.up = true;
@@ -27,6 +24,59 @@ public class Game {
 		queueEvent (new CurrentTileChangedEvent (currentTile));
 		queueEvent (new StoredTileChangedEvent (storedTile));
 
+	}
+
+	public void initialise(string saveData)
+	{
+		string[] data = saveData.Split(new string[]{"|"}, System.StringSplitOptions.None);
+		int width = int.Parse (data [0]);
+		int height = int.Parse (data [1]);
+		int genId = int.Parse (data [2]);
+		tileData = new GamePiece?[width, height];
+		currentTile = GamePiece.fromHash (int.Parse (data [3]));
+		storedTile = GamePiece.fromHash (int.Parse (data [4]));
+		queueEvent (new CurrentTileChangedEvent (currentTile));
+		queueEvent (new StoredTileChangedEvent (storedTile));
+		int i = 5;
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				string td = data [i];
+				i++;
+				if (td != "X") {
+					GamePiece newTile = GamePiece.fromHash (int.Parse (td));
+					tileData [x, y] = newTile;
+					queueEvent (new TileChangedEvent (newTile, x, y));
+				}
+			}
+		}
+		recalculateUncoveredArrows ();
+		generator = PieceGenerator.fromId (genId);
+	}
+
+	private void recalculateUncoveredArrows()
+	{
+		uncoveredArrows = new List<Position> ();
+		for (int x = 0; x < tileData.GetLength (0); x++) {
+			for (int y = 0; y < tileData.GetLength (1); y++) {
+				if (tileData [x, y] == null) {
+					if ((y + 1 < tileData.GetLength(1)) && (tileData [x, y + 1] != null) && (((GamePiece) tileData [x, y + 1]).down)) {
+						uncoveredArrows.Add (new Position (x, y));
+						continue;
+					}
+					if ((y > 0) && (tileData [x, y - 1] != null) && (((GamePiece) tileData [x, y - 1]).up)) {
+						uncoveredArrows.Add (new Position (x, y));
+						continue;
+					}
+					if ((x + 1 < tileData.GetLength(0)) && (tileData [x + 1, y] != null) && (((GamePiece) tileData [x + 1, y]).left)) {
+						uncoveredArrows.Add (new Position (x, y));
+						continue;
+					}
+					if ((x > 0) && (tileData [x - 1, y] != null) && (((GamePiece) tileData [x - 1, y]).right)) {
+						uncoveredArrows.Add (new Position (x, y));
+					}
+				}
+			}
+		}
 	}
 
 	void queueEvent(GameEvent evt)
@@ -55,12 +105,7 @@ public class Game {
 
 	private GamePiece generatePiece()
 	{
-		int i = Random.Range(0,99);
-
-		int hash = chanceArray [i];
-		Debug.Log (i.ToString () + "--" + hash.ToString ());
-		GamePiece g = GamePiece.fromHash (hash);
-		return g;
+		return generator.getNextPiece ();
 	}
 
 	public bool[,] getPlaceablePositions(GamePiece t)
@@ -122,8 +167,6 @@ public class Game {
 			}
 		}
 		return new GameLostEvent();
-
-
 	}
 
 	private int countTrue(bool[,] arr)
@@ -326,6 +369,26 @@ public class Game {
 		}
 	}
 
+	public string saveGame()
+	{
+		string o = tileData.GetLength (0).ToString () + "|" + tileData.GetLength (1).ToString () + "|" + generator.getId().ToString () + "|";
+		o += currentTile.GetHashCode ().ToString () + "|" + storedTile.GetHashCode ().ToString ();
+		for (int y = 0; y < tileData.GetLength (1); y++) {
+			for (int x = 0; x < tileData.GetLength (0); x++) {
+				GamePiece? q = tileData [x, y];
+				if (q == null)
+				{
+					o += "|X";
+				} else {
+					o += "|" + q.GetHashCode ().ToString ();
+				}
+			}
+		}
+		return o;
+	}
+
+
+
 }
 
 public struct GamePiece {
@@ -384,9 +447,11 @@ public struct GamePiece {
 		c.up = (h % 2 == 1);
 		return c;
 	}
+
+
 }
 
-public class GameEvent {
+public abstract class GameEvent {
 
 }
 
@@ -426,5 +491,116 @@ public class GameWonEvent : GameEvent {
 
 }
 
+public abstract class PieceGenerator {
+	public abstract int getId();
+	public abstract GamePiece getNextPiece ();
 
+	public static PieceGenerator fromId(int id)
+	{
+		switch (id) {
+		case(1):
+			{
+				return new ChanceGenerator (ChanceGenerator.easy);
+			}
+		}
+		return null;
+	}
+}
+
+public class ChanceGenerator : PieceGenerator {
+
+	public static readonly int[] easy = new int[] {
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		0,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		7,
+		7,
+		7,
+		7,
+		7,
+		7,
+		7,
+		7,
+		7,
+		7,
+		7,
+		7,
+		7,
+		7,
+		7,
+		7,
+		7,
+		7,
+		7,
+		7,
+		6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6
+	};
+
+	int[] chanceArray;
+	public ChanceGenerator (int[] ChanceArray)
+	{
+		chanceArray = ChanceArray;
+	}
+	public override int getId ()
+	{
+		return 1;
+	}
+	public override GamePiece getNextPiece ()
+	{
+		if ((chanceArray == null) || (chanceArray.Length == 0)) {
+			return GamePiece.fromHash (0);
+		}
+		int i = Random.Range(0, chanceArray.Length - 1);
+		int hash = chanceArray [i];
+		GamePiece g = GamePiece.fromHash (hash);
+		return g;
+	}
+}
 

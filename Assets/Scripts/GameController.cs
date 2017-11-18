@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
+	static string loadString;
 	Game engine;
 	int width;
 	int height;
@@ -15,85 +17,17 @@ public class GameController : MonoBehaviour {
 	public Tile[,] tiles;
 	bool[,] previousCP;
 	bool[,] hasPlaced;
-	int[] easy = new int[] {
-		0,
-		0,
-		0,
-		0,
-		0,
-		0,
-		0,
-		0,
-		0,
-		0,
-		1,
-		1,
-		1,
-		1,
-		1,
-		1,
-		1,
-		1,
-		1,
-		1,
-		1,
-		1,
-		1,
-		1,
-		1,
-		1,
-		1,
-		1,
-		1,
-		1,
-		3,
-		3,
-		3,
-		3,
-		3,
-		3,
-		3,
-		3,
-		3,
-		3,
-		3,
-		3,
-		3,
-		3,
-		3,
-		3,
-		3,
-		3,
-		3,
-		3,
-		7,
-		7,
-		7,
-		7,
-		7,
-		7,
-		7,
-		7,
-		7,
-		7,
-		7,
-		7,
-		7,
-		7,
-		7,
-		7,
-		7,
-		7,
-		7,
-		7,
-		6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6
-	};
+
 	// Use this for initialization
 	void Start () {
 		engine = new Game ();
 		width = 44;
 		height = 44;
-		engine.initialise (width, height, easy);
+		if (loadString == null) {
+			engine.initialise (width, height, new ChanceGenerator (ChanceGenerator.easy));
+		} else {
+			engine.initialise (loadString);
+		}
 		tiles = new Tile[width, height];
 		previousCP = new bool[width, height];
 		for (int x = 0; x < width; x++) {
@@ -251,6 +185,24 @@ public class GameController : MonoBehaviour {
 	{
 		GameController c = GameObject.Find ("Tiles").GetComponent<GameController> ();
 		c.updateZoom (Mathf.Pow (2, step));
+	}
+
+	public static string SaveGame()
+	{
+		GameController c = GameObject.Find ("Tiles").GetComponent<GameController> ();
+		return c.engine.saveGame ();
+	}
+
+	public static void loadGame(string ls)
+	{
+		loadString = ls;
+		SceneManager.LoadScene (0);
+	}
+
+	public static void startGame()
+	{
+		loadString = null;
+		SceneManager.LoadScene (0);
 	}
 
 

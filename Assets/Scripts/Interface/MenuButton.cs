@@ -7,5 +7,8 @@ public class MenuButton : Tappable {
 	public override void OnTap ()
 	{
 		Debug.Log ("Menu button was tapped");
+		PlayerPrefs.SetString ("CurrentSave", GameController.SaveGame ());
+
+
 	}
 }
