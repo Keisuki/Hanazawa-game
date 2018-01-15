@@ -506,8 +506,20 @@ public abstract class PieceGenerator {
 			}
 		case(2):
 			{
-				ChanceGenerator q = new ChanceGenerator (ChanceGenerator.easy);
+				ChanceGenerator q = new ChanceGenerator (ChanceGenerator.medium);
 				q.setId (2);
+				return q;
+			}
+		case(3):
+			{
+				ChanceGenerator q = new ChanceGenerator (ChanceGenerator.hard);
+				q.setId (3);
+				return q;
+			}
+		case(4):
+			{
+				ChanceGenerator q = new ChanceGenerator (ChanceGenerator.veryHard);
+				q.setId (3);
 				return q;
 			}
 		}
@@ -517,7 +529,7 @@ public abstract class PieceGenerator {
 
 public class ChanceGenerator : PieceGenerator {
 
-	public static readonly int[] easy = new int[] {
+	public static readonly int[] original = new int[] {
 		0,
 		0,
 		0,
@@ -589,6 +601,15 @@ public class ChanceGenerator : PieceGenerator {
 		7,
 		7,
 		6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6
+	};
+
+	public static readonly int[] easy = new int[] {7,7,7,7,7,7,7,7,7,7,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0
+	};
+	public static readonly int[] medium = new int[] {7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0
+	};
+	public static readonly int[] hard = new int[] {7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0
+	};
+	public static readonly int[] veryHard = new int[] {7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0
 	};
 	int id;
 	int[] chanceArray;
