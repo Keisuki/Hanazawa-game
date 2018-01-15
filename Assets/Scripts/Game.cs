@@ -500,7 +500,15 @@ public abstract class PieceGenerator {
 		switch (id) {
 		case(1):
 			{
-				return new ChanceGenerator (ChanceGenerator.easy);
+				ChanceGenerator q = new ChanceGenerator (ChanceGenerator.easy);
+				q.setId (1);
+				return q;
+			}
+		case(2):
+			{
+				ChanceGenerator q = new ChanceGenerator (ChanceGenerator.easy);
+				q.setId (2);
+				return q;
 			}
 		}
 		return null;
@@ -582,7 +590,7 @@ public class ChanceGenerator : PieceGenerator {
 		7,
 		6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6
 	};
-
+	int id;
 	int[] chanceArray;
 	public ChanceGenerator (int[] ChanceArray)
 	{
@@ -590,7 +598,14 @@ public class ChanceGenerator : PieceGenerator {
 	}
 	public override int getId ()
 	{
-		return 1;
+		if (id == 0) {
+			return 1;
+		}
+		return id;
+	}
+	public void setId(int newId)
+	{
+		id = newId;
 	}
 	public override GamePiece getNextPiece ()
 	{

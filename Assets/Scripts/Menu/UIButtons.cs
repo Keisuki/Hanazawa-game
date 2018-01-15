@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class UIButtons : MonoBehaviour {
+	public GameObject topMenu;
+	public GameObject difficultyMenu;
+	public GameObject tutorialMenu;
 
 	public void OnResumeButton()
 	{
@@ -14,6 +17,20 @@ public class UIButtons : MonoBehaviour {
 
 	public void OnStartButton()
 	{
-		GameController.startGame ();
+		difficultyMenu.SetActive (true);
+		tutorialMenu.SetActive (false);
+		topMenu.SetActive (false);
+	}
+
+	public void OnBackButton()
+	{
+		difficultyMenu.SetActive (false);
+		tutorialMenu.SetActive (false);
+		topMenu.SetActive (true);
+	}
+
+	public void OnStartButtonWithGenerator(int id)
+	{
+		GameController.startGame (id);
 	}
 }

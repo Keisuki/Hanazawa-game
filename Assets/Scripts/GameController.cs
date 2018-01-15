@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
 	static string loadString;
+	static int generatorId = 1;
 	Game engine;
 	int width;
 	int height;
@@ -24,7 +25,7 @@ public class GameController : MonoBehaviour {
 		width = 44;
 		height = 44;
 		if (loadString == null) {
-			engine.initialise (width, height, new ChanceGenerator (ChanceGenerator.easy));
+			engine.initialise (width, height, PieceGenerator.fromId(generatorId));
 		} else {
 			engine.initialise (loadString);
 		}
@@ -201,6 +202,14 @@ public class GameController : MonoBehaviour {
 
 	public static void startGame()
 	{
+		generatorId = 1;
+		loadString = null;
+		SceneManager.LoadScene (1);
+	}
+
+	public static void startGame(int _generatorId)
+	{
+		generatorId = _generatorId;
 		loadString = null;
 		SceneManager.LoadScene (1);
 	}
