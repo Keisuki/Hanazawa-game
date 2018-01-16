@@ -540,7 +540,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 65918d849fbda044a86661628b5b631e, type: 3}
   - {fileID: 8300000, guid: f104f8d8425d33446b02fc01dafd5877, type: 3}
   swapSound: {fileID: 0}
-  newGameSound: {fileID: 0}
+  newGameSound: {fileID: 8300000, guid: 431a5ad6342959649946493fe35abd24, type: 3}
   tilePrefab: {fileID: 1175461024570824, guid: 632a7e851bc81bc48980b7ced787d29e, type: 2}
   tileTextures:
   - {fileID: 21300000, guid: 99b6e12dbfbf8094a8b64ee25bf6ce53, type: 3}
