@@ -533,6 +533,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d47862cd47f23f4a9118181b19a62c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playSounds:
+  - {fileID: 8300000, guid: 343590d385d63b740b446913c81a5552, type: 3}
+  - {fileID: 8300000, guid: 9d878be51e8f27745ba64f69e10dffff, type: 3}
+  - {fileID: 8300000, guid: 59fac658635d1ed4fbcfab065ad27091, type: 3}
+  - {fileID: 8300000, guid: 65918d849fbda044a86661628b5b631e, type: 3}
+  - {fileID: 8300000, guid: f104f8d8425d33446b02fc01dafd5877, type: 3}
+  swapSound: {fileID: 0}
+  newGameSound: {fileID: 0}
   tilePrefab: {fileID: 1175461024570824, guid: 632a7e851bc81bc48980b7ced787d29e, type: 2}
   tileTextures:
   - {fileID: 21300000, guid: 99b6e12dbfbf8094a8b64ee25bf6ce53, type: 3}

@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour {
 	static string loadString;
 	static int generatorId = 1;
+	public AudioClip[] playSounds;
+	public AudioClip swapSound;
+	public AudioClip newGameSound;
 	Game engine;
 	int width;
 	int height;
@@ -58,7 +61,8 @@ public class GameController : MonoBehaviour {
 		q = Instantiate (edgeTextures [7], transform);
 		q.transform.localPosition = new Vector3 (width, -1, 0);
 		hasPlaced = new bool[width, height];
-		ProcessAllEvents ();
+		ProcessAllEvents (false);
+		playSound (newGameSound);
 	}
 
 
@@ -87,7 +91,7 @@ public class GameController : MonoBehaviour {
 		previousCP = placeable;
 	}
 
-	bool ProcessEvent()
+	bool ProcessEvent(bool withSound = true)
 	{
 		GameEvent evt = engine.getQueuedEvent ();
 		if (evt == null) {
@@ -97,6 +101,13 @@ public class GameController : MonoBehaviour {
 			TileChangedEvent sEvt = (TileChangedEvent)evt;
 			tiles [sEvt.x, sEvt.y].SetTexture (tileTextures [sEvt.currentPiece.GetHashCode ()]);
 			hasPlaced [sEvt.x, sEvt.y] = true;
+			if (withSound) {
+				int randomNumber = Random.Range (0, playSounds.Length);
+
+				AudioClip clip = playSounds [randomNumber];
+				Debug.Log (randomNumber.ToString () + ", " + clip.ToString ());
+				playSound (clip);
+			}
 		}
 		if (evt is CurrentTileChangedEvent) {
 			CurrentTileChangedEvent sEvt = (CurrentTileChangedEvent)evt;
@@ -105,6 +116,8 @@ public class GameController : MonoBehaviour {
 		if (evt is StoredTileChangedEvent) {
 			StoredTileChangedEvent sEvt = (StoredTileChangedEvent)evt;
 			GameObject.Find ("TileStored").GetComponent<Tile> ().SetTexture (tileTextures [sEvt.newStoredTile.GetHashCode()]);
+			AudioClip clip = swapSound;
+			playSound (clip);
 		}
 		if (evt is GameWonEvent) {
 			Debug.Log ("WINNER");
@@ -115,12 +128,12 @@ public class GameController : MonoBehaviour {
 		return true;
 	}
 
-	void ProcessAllEvents()
+	void ProcessAllEvents(bool withSound = true)
 	{
 		int q = 0;
 		bool p = true;
 		while (p) {
-			p = ProcessEvent ();
+			p = ProcessEvent (withSound);
 			if (p) {
 				q++;
 			}
@@ -212,6 +225,13 @@ public class GameController : MonoBehaviour {
 		generatorId = _generatorId;
 		loadString = null;
 		SceneManager.LoadScene (1);
+	}
+
+	public static void playSound(AudioClip clip)
+	{
+		if (clip != null) {
+			AudioSource.PlayClipAtPoint (clip, Camera.main.transform.position);
+		}
 	}
 
 
