@@ -121,6 +121,7 @@ public class GameController : MonoBehaviour {
 		}
 		if (evt is GameWonEvent) {
 			Debug.Log ("WINNER");
+			Celebration.globalWin ();
 		}
 		if (evt is GameLostEvent) {
 			Debug.Log ("Loser");
