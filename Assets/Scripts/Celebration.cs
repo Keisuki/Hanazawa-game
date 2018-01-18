@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Celebration : MonoBehaviour {
 	bool fireworks = false;
-	int stepsUntilFirework = 20;
+	public float secondsBetweenFireworksUpper = 4;
+	public float secondsBetweenFireworksLower = 2;
+	private float timeUntilNextFirework = 0.001;
 	public GameObject fireworkPrefab;
 	public GameObject particlePrefab;
 	// Use this for initialization
@@ -15,9 +17,9 @@ public class Celebration : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (fireworks) {
-			stepsUntilFirework--;
-			if (stepsUntilFirework <= 0) {
-				stepsUntilFirework = Random.Range (120, 240);
+			timeUntilNextFirework -= Time.deltaTime;
+			if (timeUntilNextFirework <= 0) {
+				timeUntilNextFirework = Random.Range (secondsBetweenFireworksLower, secondsBetweenFireworksUpper);
 				createParticle (new Vector3 (Random.Range (-3, 3), -5, 0), new Vector3 (Random.Range (-2.0f, 2.0f), Random.Range (6.0f, 8.0f), 0), 1.25f, true);
 			}
 		}
