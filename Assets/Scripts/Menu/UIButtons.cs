@@ -33,4 +33,11 @@ public class UIButtons : MonoBehaviour {
 	{
 		GameController.startGame (id);
 	}
+
+	public void OnTutorialButton()
+	{
+		difficultyMenu.SetActive (false);
+		tutorialMenu.SetActive (true);
+		topMenu.SetActive (false);
+	}
 }
