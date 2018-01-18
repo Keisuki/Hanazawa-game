@@ -9,7 +9,7 @@ public class Celebration : MonoBehaviour {
 	public GameObject particlePrefab;
 	// Use this for initialization
 	void Start () {
-		fireworks = true;
+		//fireworks = true;
 	}
 	
 	// Update is called once per frame

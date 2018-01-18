@@ -34,7 +34,7 @@ public class FireworkParticle : MonoBehaviour {
 	void FireworkExplode()
 	{
 		for (int i = 0; i < 8; i++) {
-			Celebration.globalCreateParticle (transform.localPosition, new Vector3 (Random.Range (-4.0f, 4.0f), Random.Range (-4.0f, 4.0f), 0), null, false);
+			Celebration.globalCreateParticle (transform.localPosition, new Vector3 (Random.Range (-4.0f, 4.0f), Random.Range (-4.0f, 4.0f), 0), 12.0f, false);
 		}
 		Destroy (gameObject);
 	}
