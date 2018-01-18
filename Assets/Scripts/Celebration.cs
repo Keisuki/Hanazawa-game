@@ -6,7 +6,7 @@ public class Celebration : MonoBehaviour {
 	bool fireworks = false;
 	public float secondsBetweenFireworksUpper = 4;
 	public float secondsBetweenFireworksLower = 2;
-	private float timeUntilNextFirework = 0.001;
+	private float timeUntilNextFirework = 0.001f;
 	public GameObject fireworkPrefab;
 	public GameObject particlePrefab;
 	// Use this for initialization
