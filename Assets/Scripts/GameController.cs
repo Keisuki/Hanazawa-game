@@ -29,8 +29,10 @@ public class GameController : MonoBehaviour {
 		height = 44;
 		if (loadString == null) {
 			engine.initialise (width, height, PieceGenerator.fromId(generatorId));
+			Stats.addAttempt (generatorId);
 		} else {
 			engine.initialise (loadString);
+			generatorId = engine.getGeneratorId ();
 		}
 		tiles = new Tile[width, height];
 		previousCP = new bool[width, height];
@@ -122,6 +124,7 @@ public class GameController : MonoBehaviour {
 		if (evt is GameWonEvent) {
 			Debug.Log ("WINNER");
 			Celebration.globalWin ();
+			Stats.addWin (generatorId);
 		}
 		if (evt is GameLostEvent) {
 			Debug.Log ("Loser");

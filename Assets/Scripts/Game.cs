@@ -108,6 +108,11 @@ public class Game {
 		return generator.getNextPiece ();
 	}
 
+	public int getGeneratorId()
+	{
+		return generator.getId ();
+	}
+
 	public bool[,] getPlaceablePositions(GamePiece t)
 	{
 		bool[,] a = new bool[tileData.GetLength (0), tileData.GetLength (1)];
