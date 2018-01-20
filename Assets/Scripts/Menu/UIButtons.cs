@@ -7,7 +7,9 @@ public class UIButtons : MonoBehaviour {
 	public GameObject topMenu;
 	public GameObject difficultyMenu;
 	public GameObject tutorialMenu;
-
+	void Start() {
+		Screen.SetResolution (320, 480, false);
+	}
 	public void OnResumeButton()
 	{
 		if (PlayerPrefs.GetString ("CurrentSave") != null) {
