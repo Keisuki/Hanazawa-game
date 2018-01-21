@@ -27,7 +27,7 @@ public class Advertising : MonoBehaviour {
 				timeLeft = secondsBetweenAds;
 				if (adsAreOn) {
 					Debug.Log ("Play an Ad at time " + t.ToString ());
-					//Advertisement.Show ();
+					Advertisement.Show ();
 				}
 			}
 			PlayerPrefs.SetInt ("SecondsUntilNextAd", timeLeft);

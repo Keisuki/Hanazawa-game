@@ -12,6 +12,9 @@ public class FireworkParticle : MonoBehaviour {
 		timeLeft = expiryTime;
 		velocity = initial;
 		this.isFirework = isFirework;
+		if (this.isFirework == false) {
+			GetComponent<SpriteRenderer> ().color = Random.ColorHSV (0, 1, 1, 1, 1, 1);
+		}
 	}
 
 	void Update()

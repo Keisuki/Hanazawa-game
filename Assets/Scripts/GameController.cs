@@ -110,6 +110,7 @@ public class GameController : MonoBehaviour {
 				Debug.Log (randomNumber.ToString () + ", " + clip.ToString ());
 				playSound (clip);
 			}
+			autoSave ();
 		}
 		if (evt is CurrentTileChangedEvent) {
 			CurrentTileChangedEvent sEvt = (CurrentTileChangedEvent)evt;
@@ -130,6 +131,11 @@ public class GameController : MonoBehaviour {
 			Debug.Log ("Loser");
 		}
 		return true;
+	}
+
+	private void autoSave()
+	{
+		PlayerPrefs.SetString ("CurrentSave", GameController.SaveGame ());
 	}
 
 	void ProcessAllEvents(bool withSound = true)

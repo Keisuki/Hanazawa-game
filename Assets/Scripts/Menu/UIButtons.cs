@@ -8,11 +8,11 @@ public class UIButtons : MonoBehaviour {
 	public GameObject difficultyMenu;
 	public GameObject tutorialMenu;
 	void Start() {
-		Screen.SetResolution (320, 480, false);
+		//Screen.SetResolution (320, 480, false);
 	}
 	public void OnResumeButton()
 	{
-		if (PlayerPrefs.GetString ("CurrentSave") != null) {
+		if ((PlayerPrefs.GetString ("CurrentSave") != null) || (PlayerPrefs.GetString ("CurrentSave") != "")) {
 			GameController.loadGame (PlayerPrefs.GetString ("CurrentSave"));
 		}
 	}
