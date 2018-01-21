@@ -111,6 +111,7 @@ public class GameController : MonoBehaviour {
 				playSound (clip);
 			}
 			autoSave ();
+			Counter.UpdateValue (engine.getPieceCount (), engine.getRemainingArrowCount ());
 		}
 		if (evt is CurrentTileChangedEvent) {
 			CurrentTileChangedEvent sEvt = (CurrentTileChangedEvent)evt;

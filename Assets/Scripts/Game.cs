@@ -392,7 +392,57 @@ public class Game {
 		return o;
 	}
 
+	public int getRemainingArrowCount()
+	{
+		int total = 0;
+		for (int i = 0; i < uncoveredArrows.Count; i++) {
+			Position p = uncoveredArrows [i];
+			int x = p.x;
+			int y = p.y;
+			if (isInBounds (x, y + 1)) {
+				if (tileData [x, y + 1] != null) {
+					if (((GamePiece)tileData [x, y + 1]).down) {
+						total++;
+					}
+				}
+			}
+			if (isInBounds (x, y - 1)) {
+				if (tileData [x, y - 1] != null) {
+					if (((GamePiece)tileData [x, y - 1]).up) {
+						total++;
+					}
+				}
+			}
+			if (isInBounds (x + 1, y)) {
+				if (tileData [x + 1, y] != null) {
+					if (((GamePiece)tileData [x + 1, y]).left) {
+						total++;
+					}
+				}
+			}
+			if (isInBounds (x - 1, y)) {
+				if (tileData [x - 1, y] != null) {
+					if (((GamePiece)tileData [x - 1, y]).right) {
+						total++;
+					}
+				}
+			}
+		}
+		return total;
+	}
 
+	public int getPieceCount()
+	{
+		int total = 0;
+		for (int y = 0; y < tileData.GetLength (1); y++) {
+			for (int x = 0; x < tileData.GetLength (0); x++) {
+				if (tileData [x, y] != null) {
+					total++;
+				}
+			}
+		}
+		return total;
+	}
 
 }
 
