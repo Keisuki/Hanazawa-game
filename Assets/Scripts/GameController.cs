@@ -127,9 +127,11 @@ public class GameController : MonoBehaviour {
 			Debug.Log ("WINNER");
 			Celebration.globalWin ();
 			Stats.addWin (generatorId);
+			WinLoss.ShowWin ();
 		}
 		if (evt is GameLostEvent) {
 			Debug.Log ("Loser");
+			WinLoss.ShowLoss ();
 		}
 		return true;
 	}
