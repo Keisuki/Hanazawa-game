@@ -26,6 +26,7 @@ public class InterfaceResize : MonoBehaviour {
 
 		transform.Find ("MenuButtonInterface").localPosition = new Vector3 (xwidth / 2.0f, ywidth / 2.0f, 9);
 		transform.Find ("Counters").localPosition = new Vector3 (-xwidth / 2.0f, ywidth / 2.0f, 9);
+		transform.Find ("WinLoss").localScale = new Vector3 (xwidth / 6.66f, xwidth / 6.66f, 1);
 
 	}
 }
