@@ -21,15 +21,17 @@ public class Screenshotter : MonoBehaviour {
 
 	// Update is called once per frame
 	void OnPostRender() {
-		if (s) {
-			Debug.Log (Application.persistentDataPath);
-			Texture2D screenImage = new Texture2D(Screen.width, Screen.height);
-			screenImage.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
-			screenImage.Apply ();
-			byte[] rawData = screenImage.EncodeToPNG ();
-			File.WriteAllBytes("E:\\scrn"+i.ToString()+".png", rawData);
-			i++;
-			s = false;
+		if (Application.platform == RuntimePlatform.WindowsEditor) {
+			if (s) {
+				Debug.Log (Application.persistentDataPath);
+				Texture2D screenImage = new Texture2D (Screen.width, Screen.height);
+				screenImage.ReadPixels (new Rect (0, 0, Screen.width, Screen.height), 0, 0);
+				screenImage.Apply ();
+				byte[] rawData = screenImage.EncodeToPNG ();
+				File.WriteAllBytes ("E:\\scrn" + i.ToString () + ".png", rawData);
+				i++;
+				s = false;
+			}
 		}
 	}
 }
