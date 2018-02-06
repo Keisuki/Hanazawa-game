@@ -20,6 +20,7 @@ public class InterfaceResize : MonoBehaviour {
 		} 
 		transform.Find ("Counters").localScale = new Vector3 (topRatio, topRatio, topRatio);
 		transform.Find ("MenuButtonInterface").localScale = new Vector3 (topRatio, topRatio, topRatio);
+		transform.Find ("ReturnToMenuDialog").localScale = new Vector3 (1.39f*topRatio, 1.39f*topRatio, topRatio);
 		if (xwidth > ywidth) {
 			float newscale = xwidth / 13.32f;
 			transform.Find ("Interface").localScale = new Vector3 (newscale, newscale, 1);
