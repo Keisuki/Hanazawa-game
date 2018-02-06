@@ -14,6 +14,12 @@ public class InterfaceResize : MonoBehaviour {
 		Vector3 topright = Camera.main.ViewportToWorldPoint (new Vector3 (1, 1, 10));
 		float xwidth = Mathf.Abs (topright.x - bottomleft.x);
 		float ywidth = Mathf.Abs (topright.y - bottomleft.y);
+		float topRatio = xwidth / 6f;
+		if (topRatio > 1) {
+			topRatio = 1;
+		} 
+		transform.Find ("Counters").localScale = new Vector3 (topRatio, topRatio, topRatio);
+		transform.Find ("MenuButtonInterface").localScale = new Vector3 (topRatio, topRatio, topRatio);
 		if (xwidth > ywidth) {
 			float newscale = xwidth / 13.32f;
 			transform.Find ("Interface").localScale = new Vector3 (newscale, newscale, 1);

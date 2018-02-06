@@ -167,10 +167,10 @@ PlayerSettings:
   tvOSTargetOSVersionString: 
   uIPrerenderedIcon: 0
   uIRequiresPersistentWiFi: 0
-  uIRequiresFullScreen: 1
+  uIRequiresFullScreen: 0
   uIStatusBarHidden: 0
   uIExitOnSuspend: 0
-  uIStatusBarStyle: 0
+  uIStatusBarStyle: 1
   iPhoneSplashScreen: {fileID: 0}
   iPhoneHighResSplashScreen: {fileID: 0}
   iPhoneTallHighResSplashScreen: {fileID: 0}
@@ -239,7 +239,7 @@ PlayerSettings:
   m_BuildTargetGraphicsAPIs: []
   m_BuildTargetVRSettings:
   - m_BuildTarget: iOS
-    m_Enabled: 1
+    m_Enabled: 0
     m_Devices: []
   openGLRequireES31: 0
   openGLRequireES31AEP: 0
